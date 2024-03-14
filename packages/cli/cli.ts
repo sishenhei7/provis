@@ -72,11 +72,11 @@ cli.command(
           },
           logLevel: log as LogLevel,
         },
-        {
-          async loadData() {
+        // {
+        //   async loadData() {
 
-          },
-        },
+        //   },
+        // },
       ))
     }
 

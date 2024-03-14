@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "jsx": "preserve",
+    "lib": ["DOM", "ESNext"],
+    "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "paths": {
+      "@provis/cli": ["./packages/client/index.ts"],
+      "@provis/client/*": ["./packages/client/*"],
+      "@provis/parser/*": ["./packages/parser/*"]
+    },
+    "resolveJsonModule": true,
+    "types": [
+      "vite",
+      "vite/client",
+      "node"
+    ],
+    "strict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "./*.ts",
+    "./packages/**/*.ts",
+    "./packages/**/*.vue",
+    "./demo/**/*.ts",
+    "./demo/**/*.vue",
+    "./test/**/*.ts"
+  ],
+  "exclude": ["**/dist/**", "node_modules"]
+}
