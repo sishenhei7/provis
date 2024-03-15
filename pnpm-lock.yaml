@@ -41,6 +41,9 @@ importers:
 
   packages/cli:
     dependencies:
+      '@provis/client':
+        specifier: workspace:^
+        version: link:../client
       '@vitejs/plugin-vue':
         specifier: ^5.0.4
         version: 5.0.4(vite@5.1.6)(vue@3.4.21)

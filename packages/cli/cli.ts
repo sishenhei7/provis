@@ -1,10 +1,10 @@
 import process from 'node:process'
+import path from 'node:path'
 import yargs from 'yargs'
 import type { LogLevel, ViteDevServer } from 'vite'
 import { getPort } from 'get-port-please'
 import { version } from './package.json'
-
-// import { build } from './commands/build'
+import { build as buildAssets } from './commands/build'
 import { createServer } from './commands/server'
 
 const cli = yargs(process.argv.slice(2))
@@ -43,6 +43,19 @@ cli.command(
     let server: ViteDevServer | undefined
     let port = 3030
 
+    async function build() {
+      const options = { entry }
+
+      await buildAssets(options, {
+        root: path.dirname(require.resolve('@provis/client')),
+        base: './',
+        build: {
+          watch: false,
+          outDir: './.provis',
+        },
+      })
+    }
+
     async function initServer() {
       if (server)
         await server.close()
@@ -80,6 +93,7 @@ cli.command(
       ))
     }
 
+    await build()
     await initServer()
   },
 )
