@@ -2,10 +2,13 @@
   "name": "@provis/client",
   "type": "module",
   "version": "0.0.1",
-  "exports": {
-    "./package.json": "./package.json",
-    "./*": "./*"
-  },
+  "main": "index.html",
+  "files": [
+    "index.html",
+    "public",
+    "src",
+    "style.css"
+  ],
   "dependencies": {
     "vue": "^3.4.21"
   },

@@ -1,11 +1,17 @@
 import process from 'node:process'
 import path from 'node:path'
+import { createRequire } from 'node:module'
 import yargs from 'yargs'
-import type { LogLevel, ViteDevServer } from 'vite'
+import type { LogLevel } from 'vite'
 import { getPort } from 'get-port-please'
+
+// import { fileURLToPath } from 'node:url';
+import { createServer } from 'vite'
 import { version } from './package.json'
-import { build as buildAssets } from './commands/build'
-import { createServer } from './commands/server'
+
+const require = createRequire(import.meta.url)
+const clientDir = path.dirname(require.resolve('@provis/client'))
+// const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const cli = yargs(process.argv.slice(2))
   .scriptName('slidev')
@@ -17,7 +23,7 @@ const cli = yargs(process.argv.slice(2))
   .alias('v', 'version')
 
 cli.command(
-  '* [entry]',
+  '*',
   'Start provis',
   args => args
     .option('port', {
@@ -32,68 +38,44 @@ cli.command(
       describe: 'force the optimizer to ignore the cache and re-bundle  ',
     })
     .option('log', {
-      default: 'warn',
+      default: 'info',
       type: 'string',
       choices: ['error', 'warn', 'info', 'silent'],
       describe: 'log level',
     })
     .strict()
     .help(),
-  async ({ entry, port: userPort, force, log }) => {
-    let server: ViteDevServer | undefined
-    let port = 3030
-
-    async function build() {
-      const options = { entry }
-
-      await buildAssets(options, {
-        root: path.dirname(require.resolve('@provis/client')),
-        base: './',
-        build: {
-          watch: false,
-          outDir: './.provis',
+  async ({ port: userPort, force, log }) => {
+    const host = 'localhost'
+    const port = userPort || await getPort({
+      port: 3030,
+      random: false,
+      portRange: [3030, 4000],
+      host,
+    })
+    const server = (await createServer(
+      {
+        root: clientDir,
+        server: {
+          port,
+          host,
+          strictPort: true,
+          open: true,
         },
-      })
-    }
-
-    async function initServer() {
-      if (server)
-        await server.close()
-
-      const options = { entry }
-      const host = 'localhost'
-      port = userPort || await getPort({
-        port: 3030,
-        random: false,
-        portRange: [3030, 4000],
-        host,
-      })
-
-      server = (await createServer(
-        options,
-        {
-          server: {
-            port,
-            strictPort: true,
-            open,
-            host,
-            force,
-          },
-          optimizeDeps: {
-            // Vite 5
-            force,
-          },
-          logLevel: log as LogLevel,
+        optimizeDeps: {
+          // Vite 5
+          force,
         },
-        // {
-        //   async loadData() {
+        logLevel: log as LogLevel,
+      },
+    ))
 
-        //   },
-        // },
-      ))
-    }
-
-    await build()
-    await initServer()
+    await server.listen()
+    server.printUrls()
+    server.bindCLIShortcuts({ print: true })
   },
 )
+
+cli
+  .help()
+  .parse()
