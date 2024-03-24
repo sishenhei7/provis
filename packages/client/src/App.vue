@@ -7,8 +7,8 @@
     <RouterLink to="/">
       Go to Home
     </RouterLink>
-    <RouterLink to="/about">
-      Go to About
+    <RouterLink to="/components">
+      Go to Components
     </RouterLink>
   </nav>
   <main>
