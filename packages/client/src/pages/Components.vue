@@ -26,7 +26,6 @@ watch(searchString, (newVal) => {
 </script>
 
 <template>
-  <h2>AboutView</h2>
   <SearchBar v-model:value="searchString">
     <n-button quaternary circle type="primary" @click="toggleType()">
       <template #icon>
