@@ -14,7 +14,6 @@
   min-height: 100vh;
   box-sizing: border-box;
   background-color: #fef6e4;
-
 }
 
 .app-container {

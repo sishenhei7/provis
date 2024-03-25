@@ -8,14 +8,12 @@ defineOptions({
 
 <template>
   <div class="search-bar">
-    <n-input v-bind="$attrs" type="text" placeholder="搜索">
+    <n-input v-bind="$attrs" type="text" placeholder="搜索" class="search-bar-input">
       <template #prefix>
         <n-icon :component="SearchOutline" />
       </template>
     </n-input>
-    <div class="search-bar-btns">
-      <slot />
-    </div>
+    <slot />
   </div>
 </template>
 
@@ -25,7 +23,7 @@ defineOptions({
   align-items: center;
 }
 
-.search-bar-btns {
-  margin-left: 4px;
+.search-bar-input {
+  flex: 1;
 }
 </style>

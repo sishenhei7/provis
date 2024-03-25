@@ -5,6 +5,7 @@ import {
   NButton,
   NIcon,
   NInput,
+  NTag,
 } from 'naive-ui'
 
 export default create({
@@ -12,5 +13,6 @@ export default create({
     NButton,
     NIcon,
     NInput,
+    NTag,
   ],
 })
