@@ -21,6 +21,10 @@ function handleSelect(str) {
   searchString.value = str
   type.value = 'graph'
 }
+function handleClear() {
+  searchString.value = ''
+  type.value = 'list'
+}
 
 const rootName = ref(null)
 const isRootMode = ref(false)
@@ -34,7 +38,7 @@ function closeRoot() {
 </script>
 
 <template>
-  <SearchBar v-model:value="searchString" style="margin-bottom: 6px;">
+  <SearchBar v-model:value="searchString" style="margin-bottom: 6px;" @clear="handleClear()">
     <n-tag v-if="rootName" closable type="info" style="margin-left: 16px;" @close="closeRoot()">
       终点：{{ rootName.name }}
     </n-tag>

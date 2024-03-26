@@ -8,7 +8,7 @@ defineOptions({
 
 <template>
   <div class="search-bar">
-    <n-input v-bind="$attrs" type="text" placeholder="搜索" class="search-bar-input">
+    <n-input v-bind="$attrs" type="text" placeholder="搜索" clearable class="search-bar-input">
       <template #prefix>
         <n-icon :component="SearchOutline" />
       </template>
