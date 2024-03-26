@@ -3,11 +3,11 @@ import { computed, onMounted, ref, watch } from 'vue'
 import type { Data, Options } from 'vis-network'
 import { Network } from 'vis-network'
 
-defineProps({
-  msg: String,
+const props = defineProps({
+  visData: Object,
 })
 
-const data = computed<Data>(() => ({}))
+const data = computed<Data>(() => props.visData as Data)
 const container = ref<HTMLElement>()
 const selected = ref<any>()
 
@@ -67,13 +67,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="container" class="vis-graph">
-    vis-graph
-  </div>
+  <div ref="container" class="vis-graph" />
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
+.vis-graph {
+  width: 600px;
+  height: 400px;
+  border: 1px solid lightgray;
 }
 </style>

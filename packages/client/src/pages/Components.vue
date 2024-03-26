@@ -2,15 +2,9 @@
 import { ref, watch } from 'vue'
 import { ListCircleOutline, LogoTableau, NavigateCircleOutline } from '@vicons/ionicons5'
 import SearchBar from '../components/SearchBar.vue'
-
-// const search = computed({
-//   get() {
-//     return route.query.search ?? ''
-//   },
-//   set(search) {
-//     router.replace({ query: { search } })
-//   },
-// })
+import VisGraph from '../components/VisGraph.vue'
+import VisList from '../components/VisList.vue'
+import { visData } from './mock'
 
 // todo: ts types
 const type = ref('list')
@@ -56,4 +50,6 @@ function closeRoot() {
       </template>
     </n-button>
   </SearchBar>
+  <VisList v-if="type === 'list'" />
+  <VisGraph v-else-if="type === 'graph'" :vis-data="visData" />
 </template>
