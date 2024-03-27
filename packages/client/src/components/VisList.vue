@@ -30,6 +30,9 @@ const visList = computed(() => {
   }
 
   traverse(props.visData)
+
+  list.sort((a, b) => b.roots.length - a.roots.length)
+
   return list
 })
 </script>
