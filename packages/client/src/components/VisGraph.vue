@@ -1,15 +1,61 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-import type { Data, Options } from 'vis-network'
+import type { Data, Node, Edge, Options } from 'vis-network'
 import { Network } from 'vis-network'
+import type { VisGraphItem } from '../type'
 
 const props = defineProps({
-  visData: Object,
+  visData: {
+    type: Object,
+    default: null,
+  },
+  searchString: {
+    type: String,
+    default: '',
+  },
 })
 
-const data = computed<Data>(() => props.visData as Data)
 const container = ref<HTMLElement>()
 const selected = ref<any>()
+
+const data = computed<Data>(() => {
+  const nodes: Node[] = []
+  const edges: Edge[] = []
+  const seen = new Set()
+
+  function traverse(data: VisGraphItem, lastId: number | null) {
+    if (!data || seen.has(data.id))
+      return
+
+    const { id, name, type, parents } = data
+
+    nodes.push({
+      id,
+      label: name,
+      shape: type === 'page' ? 'star' : 'dot',
+      // @ts-expect-error additional data
+      extra: data,
+    })
+
+    if (lastId) {
+      edges.push({
+        from: lastId,
+        to: id,
+        arrows: { to: { enabled: true, scaleFactor: 0.8 } },
+      })
+    }
+
+    seen.add(id)
+    parents.forEach(item => traverse(item, id))
+  }
+
+  traverse(props.visData as VisGraphItem, null)
+
+  return {
+    nodes,
+    edges,
+  }
+})
 
 onMounted(() => {
   const options: Options = {
@@ -51,7 +97,6 @@ onMounted(() => {
   }
 
   const network = new Network(container.value!, data.value, options)
-
   network.on('click', (e) => {
     const id = e.nodes?.[0]
     const node = (data.value.nodes as any[])?.find(i => i.id === id)?.extra
@@ -67,13 +112,16 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="container" class="vis-graph" />
+  <div ref="container" class="vis-graph">
+    vis-graph
+  </div>
 </template>
 
 <style scoped>
 .vis-graph {
-  width: 600px;
-  height: 400px;
+  margin: 0 auto;
+  width: 700px;
+  min-height: 400px;
   /* border: 1px solid lightgray; */
 }
 </style>

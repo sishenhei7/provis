@@ -11,14 +11,17 @@
 #app {
   padding: 36px;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   box-sizing: border-box;
   background-color: #fef6e4;
 }
 
 .app-container {
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
   max-width: 1200px;
+  height: 100%;
 }
 
 .app-title {

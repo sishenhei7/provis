@@ -4,7 +4,7 @@ import { ListCircleOutline, LogoTableau, NavigateCircleOutline } from '@vicons/i
 import SearchBar from '../components/SearchBar.vue'
 import VisGraph from '../components/VisGraph.vue'
 import VisList from '../components/VisList.vue'
-import { visData, visGraphData } from './mock'
+import { visGraphData } from './mock'
 
 // todo: ts types
 const type = ref('list')
@@ -58,6 +58,15 @@ function closeRoot() {
       </template>
     </n-button>
   </SearchBar>
-  <VisList v-if="type === 'list'" :vis-data="visGraphData" :search-string="searchString" @select="handleSelect" />
-  <VisGraph v-else-if="type === 'graph'" :vis-data="visData" />
+  <VisList
+    v-if="type === 'list'" :vis-data="visGraphData" :search-string="searchString" class="vis-component"
+    @select="handleSelect"
+  />
+  <VisGraph v-else-if="type === 'graph'" :vis-data="visGraphData" :search-string="searchString" class="vis-component" />
 </template>
+
+<style scoped>
+.vis-component {
+  flex: 1;
+}
+</style>

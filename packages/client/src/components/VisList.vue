@@ -11,9 +11,10 @@ const props = defineProps({
     default: '',
   },
 })
+defineEmits(['select'])
 const visList = computed(() => {
   const list = []
-  const pathSet = new Set()
+  const seen = new Set()
 
   function traverse(data) {
     if (data) {
@@ -23,9 +24,9 @@ const visList = computed(() => {
   }
 
   function add(data) {
-    if (!pathSet.has(data.path) && (!props.searchString || data.name.includes(props.searchString))) {
+    if (!seen.has(data.id) && (!props.searchString || data.name.includes(props.searchString))) {
       list.push(data)
-      pathSet.add(data.path)
+      seen.add(data.id)
     }
   }
 
@@ -39,7 +40,7 @@ const visList = computed(() => {
 
 <template>
   <div class="vis-list">
-    <div v-for="item in visList" :key="item.path" class="vis-list-item" @click="$emit('select', item.name)">
+    <div v-for="item in visList" :key="item.id" class="vis-list-item" @click="$emit('select', item.name)">
       <div>
         <span>&#60;</span>
         <span class="vis-list-item-name">{{ item.name }}</span>
