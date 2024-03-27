@@ -49,8 +49,11 @@ const visList = computed(() => {
         {{ item.path }}
       </p>
       <div class="vis-list-item-tags">
-        <n-tag type="success" size="small" round>
+        <n-tag type="success" size="small" round class="vis-list-item-tag">
           引用次数：{{ item.roots.length }}
+        </n-tag>
+        <n-tag type="success" size="small" round class="vis-list-item-tag">
+          {{ item.type }}
         </n-tag>
       </div>
     </div>
@@ -80,5 +83,11 @@ const visList = computed(() => {
 }
 .vis-list-item-tags {
   margin-left: 12px;
+}
+.vis-list-item-tag {
+  margin-left: 8px;
+}
+.vis-list-item-tag:first-child {
+  margin-left: 0;
 }
 </style>

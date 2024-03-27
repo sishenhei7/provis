@@ -32,28 +32,33 @@ export const visData = {
 export const visGraphData = {
   name: 'Node 1',
   path: 'Path To Node 1',
+  type: 'component',
   roots: [
     {
       name: 'Node 3',
       path: 'Path To Node 3',
+      type: 'page',
       roots: [],
       parents: [],
     },
     {
       name: 'Node 4',
       path: 'Path To Node 4',
+      type: 'page',
       roots: [],
       parents: [],
     },
     {
       name: 'Node 7',
       path: 'Path To Node 7',
+      type: 'page',
       roots: [],
       parents: [],
     },
     {
       name: 'Node 8',
       path: 'Path To Node 8',
+      type: 'page',
       roots: [],
       parents: [],
     },
@@ -62,16 +67,19 @@ export const visGraphData = {
     {
       name: 'Node 2',
       path: 'Path To Node 2',
+      type: 'component',
       roots: [
         {
           name: 'Node 4',
           path: 'Path To Node 4',
+          type: 'page',
           roots: [],
           parents: [],
         },
         {
           name: 'Node 7',
           path: 'Path To Node 7',
+          type: 'page',
           roots: [],
           parents: [],
         },
@@ -80,16 +88,19 @@ export const visGraphData = {
         {
           name: 'Node 4',
           path: 'Path To Node 4',
+          type: 'component',
           roots: [],
           parents: [],
         },
         {
           name: 'Node 5',
           path: 'Path To Node 5',
+          type: 'component',
           roots: [
             {
               name: 'Node 7',
               path: 'Path To Node 7',
+              type: 'page',
               roots: [],
               parents: [],
             },
@@ -98,10 +109,12 @@ export const visGraphData = {
             {
               name: 'Node 6',
               path: 'Path To Node 6',
+              type: 'component',
               roots: [
                 {
                   name: 'Node 7',
                   path: 'Path To Node 7',
+                  type: 'page',
                   roots: [],
                   parents: [],
                 },
@@ -110,6 +123,7 @@ export const visGraphData = {
                 {
                   name: 'Node 7',
                   path: 'Path To Node 7',
+                  type: 'page',
                   roots: [],
                   parents: [],
                 },
@@ -122,12 +136,14 @@ export const visGraphData = {
     {
       name: 'Node 3',
       path: 'Path To Node 3',
+      type: 'page',
       roots: [],
       parents: [],
     },
     {
       name: 'Node 8',
       path: 'Path To Node 8',
+      type: 'page',
       roots: [],
       parents: [],
     },

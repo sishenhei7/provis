@@ -74,6 +74,6 @@ onMounted(() => {
 .vis-graph {
   width: 600px;
   height: 400px;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
 }
 </style>
