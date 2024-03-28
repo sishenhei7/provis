@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { ListCircleOutline, LogoTableau, NavigateCircleOutline } from '@vicons/ionicons5'
 import SearchBar from '../components/SearchBar.vue'
 import VisGraph from '../components/VisGraph.vue'
@@ -13,15 +13,17 @@ function toggleType() {
 }
 
 const searchString = ref('')
-watch(searchString, (newVal) => {
-  // eslint-disable-next-line no-console
-  console.log(newVal)
-})
-function handleSelect(str) {
-  searchString.value = str
+const selected = ref(null)
+function handleSearch() {
+  type.value = 'list'
+}
+function handleSelect(item) {
+  selected.value = item
+  searchString.value = item.name
   type.value = 'graph'
 }
 function handleClear() {
+  selected.value = null
   searchString.value = ''
   type.value = 'list'
 }
@@ -38,7 +40,7 @@ function closeRoot() {
 </script>
 
 <template>
-  <SearchBar v-model:value="searchString" style="margin-bottom: 6px;" @clear="handleClear()">
+  <SearchBar v-model:value="searchString" style="margin-bottom: 6px;" @clear="handleClear()" @input="handleSearch()">
     <n-tag v-if="rootName" closable type="info" style="margin-left: 16px;" @close="closeRoot()">
       终点：{{ rootName.name }}
     </n-tag>
@@ -62,7 +64,7 @@ function closeRoot() {
     v-if="type === 'list'" :vis-data="visGraphData" :search-string="searchString" class="vis-component"
     @select="handleSelect"
   />
-  <VisGraph v-else-if="type === 'graph'" :vis-data="visGraphData" :search-string="searchString" class="vis-component" />
+  <VisGraph v-else-if="type === 'graph'" :vis-data="visGraphData" :selected="selected" class="vis-component" />
 </template>
 
 <style scoped>

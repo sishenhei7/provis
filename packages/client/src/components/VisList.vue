@@ -40,7 +40,7 @@ const visList = computed(() => {
 
 <template>
   <div class="vis-list">
-    <div v-for="item in visList" :key="item.id" class="vis-list-item" @click="$emit('select', item.name)">
+    <div v-for="item in visList" :key="item.id" class="vis-list-item" @click="$emit('select', item)">
       <div>
         <span>&#60;</span>
         <span class="vis-list-item-name">{{ item.name }}</span>

@@ -9,9 +9,9 @@ const props = defineProps({
     type: Object,
     default: null,
   },
-  searchString: {
-    type: String,
-    default: '',
+  selected: {
+    type: Object,
+    default: () => ({}),
   },
 })
 
@@ -33,6 +33,7 @@ const data = computed<Data>(() => {
       id,
       label: name,
       shape: type === 'page' ? 'star' : 'dot',
+      color: props.selected.id === data.id ? '#82c742' : undefined,
       // @ts-expect-error additional data
       extra: data,
     })
@@ -49,8 +50,7 @@ const data = computed<Data>(() => {
     parents.forEach(item => traverse(item, id))
   }
 
-  traverse(props.visData as VisGraphItem, null)
-
+  traverse(props.selected as VisGraphItem, null)
   return {
     nodes,
     edges,
@@ -102,7 +102,6 @@ onMounted(() => {
     const node = (data.value.nodes as any[])?.find(i => i.id === id)?.extra
     if (node)
       selected.value = node
-      // console.log(111, node)
   })
 
   watch(data, () => {
