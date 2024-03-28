@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { ListCircleOutline, LogoTableau, NavigateCircleOutline } from '@vicons/ionicons5'
+import { ListCircleOutline, LogoTableau, NavigateCircleOutline, MoveOutline } from '@vicons/ionicons5'
 import SearchBar from '../components/SearchBar.vue'
 import VisGraph from '../components/VisGraph.vue'
 import VisList from '../components/VisList.vue'
@@ -14,8 +14,11 @@ function toggleType() {
 
 const searchString = ref('')
 const selected = ref(null)
+const selectedRoot = ref(null)
+const selectedRootMode = ref(false)
 function handleSearch() {
   type.value = 'list'
+  resetSelected()
 }
 function handleSelect(item) {
   selected.value = item
@@ -23,26 +26,32 @@ function handleSelect(item) {
   type.value = 'graph'
 }
 function handleClear() {
-  selected.value = null
   searchString.value = ''
-  type.value = 'list'
+  resetSelected()
 }
-
-const rootName = ref(null)
-const isRootMode = ref(false)
+function resetSelected() {
+  type.value = 'list'
+  selected.value = null
+  selectedRoot.value = null
+  selectedRootMode.value = false
+}
+function handleSelectNode(node) {
+  if (selectedRootMode.value)
+    selectedRoot.value = node
+}
 function checkRoot() {
-  isRootMode.value = !isRootMode.value
+  selectedRootMode.value = !selectedRootMode.value
 }
 function closeRoot() {
-  rootName.value = null
-  isRootMode.value = false
+  selectedRoot.value = null
+  selectedRootMode.value = false
 }
 </script>
 
 <template>
   <SearchBar v-model:value="searchString" style="margin-bottom: 6px;" @clear="handleClear()" @input="handleSearch()">
-    <n-tag v-if="rootName" closable type="info" style="margin-left: 16px;" @close="closeRoot()">
-      终点：{{ rootName.name }}
+    <n-tag v-if="selectedRoot" closable type="info" style="margin-left: 16px;" @close="closeRoot()">
+      终点：{{ selectedRoot.name }}
     </n-tag>
     <n-button quaternary circle type="primary" style="margin-left: 10px;" @click="toggleType()">
       <template #icon>
@@ -55,7 +64,8 @@ function closeRoot() {
     <n-button quaternary circle type="primary" style="margin-left: 6px;" @click="checkRoot()">
       <template #icon>
         <n-icon :size="28">
-          <NavigateCircleOutline />
+          <NavigateCircleOutline v-show="!selectedRootMode" />
+          <MoveOutline v-show="selectedRootMode" />
         </n-icon>
       </template>
     </n-button>
@@ -64,7 +74,10 @@ function closeRoot() {
     v-if="type === 'list'" :vis-data="visGraphData" :search-string="searchString" class="vis-component"
     @select="handleSelect"
   />
-  <VisGraph v-else-if="type === 'graph'" :vis-data="visGraphData" :selected="selected" class="vis-component" />
+  <VisGraph
+    v-else-if="type === 'graph'" :vis-data="visGraphData" :selected="selected" :selected-root="selectedRoot"
+    class="vis-component" @select-node="handleSelectNode"
+  />
 </template>
 
 <style scoped>

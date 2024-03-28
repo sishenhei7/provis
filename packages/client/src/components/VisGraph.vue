@@ -11,12 +11,15 @@ const props = defineProps({
   },
   selected: {
     type: Object,
-    default: () => ({}),
+    default: () => null,
+  },
+  selectedRoot: {
+    type: Object,
+    default: () => null,
   },
 })
-
+const emit = defineEmits(['selectNode'])
 const container = ref<HTMLElement>()
-const selected = ref<any>()
 
 const data = computed<Data>(() => {
   const nodes: Node[] = []
@@ -101,7 +104,7 @@ onMounted(() => {
     const id = e.nodes?.[0]
     const node = (data.value.nodes as any[])?.find(i => i.id === id)?.extra
     if (node)
-      selected.value = node
+      emit('selectNode', node)
   })
 
   watch(data, () => {
