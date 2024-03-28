@@ -24,6 +24,7 @@ defineOptions({
 }
 
 .search-bar-input {
+  margin-bottom: 0!important;
   flex: 1;
 }
 </style>

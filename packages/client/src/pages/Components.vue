@@ -76,12 +76,15 @@ function closeRoot() {
   />
   <VisGraph
     v-else-if="type === 'graph'" :vis-data="visGraphData" :selected="selected" :selected-root="selectedRoot"
-    class="vis-component" @select-node="handleSelectNode"
+    class="vis-component" :class="[selectedRootMode && 'cursor-cross']" @select-node="handleSelectNode"
   />
 </template>
 
 <style scoped>
 .vis-component {
   flex: 1;
+}
+.cursor-cross {
+  cursor: crosshair;
 }
 </style>

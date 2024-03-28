@@ -21,14 +21,17 @@ const props = defineProps({
 const emit = defineEmits(['selectNode'])
 const container = ref<HTMLElement>()
 
+// const selectedRootId = computed(() => props.selectedRoot ? props.selectedRoot.id : null)
+
 const data = computed<Data>(() => {
   const nodes: Node[] = []
   const edges: Edge[] = []
   const seen = new Set()
 
+  // 深度优先遍历，到达 root 的时候丢弃
   function traverse(data: VisGraphItem, lastId: number | null) {
     if (!data || seen.has(data.id))
-      return
+      return true
 
     const { id, name, type, parents } = data
 
@@ -49,11 +52,12 @@ const data = computed<Data>(() => {
       })
     }
 
-    seen.add(id)
+    seen.add(data.id)
     parents.forEach(item => traverse(item, id))
   }
 
   traverse(props.selected as VisGraphItem, null)
+
   return {
     nodes,
     edges,
