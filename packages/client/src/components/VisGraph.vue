@@ -47,6 +47,7 @@ const data = computed<Data>(() => {
 
     if (lastId) {
       edges.push({
+        color: selectedRootId.value ? '#ce45ef' : '#333',
         from: lastId,
         to: id,
         arrows: { to: { enabled: true, scaleFactor: 0.8 } },
